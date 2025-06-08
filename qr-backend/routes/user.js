@@ -23,12 +23,13 @@ const authenticateToken = (req, res, next) => {
 // ✅ Profile endpoint (GET /api/user/profile)
 router.get('/profile', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.userId).select('-password');
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     res.json(user); // Sends user data to frontend
   } catch (err) {
+    console.error('Profile fetch error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

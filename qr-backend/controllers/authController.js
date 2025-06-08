@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+require('dotenv').config();
 
-const SECRET = 'supersecretkey'; // Move to .env in production!
+// Remove hardcoded secret and use environment variable
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Signup controller
 exports.signup = async (req, res) => {
@@ -35,7 +37,8 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: 'Invalid password' });
 
-    const token = jwt.sign({ userId: user._id }, SECRET, { expiresIn: '1d' });
+    // Use JWT_SECRET from environment variable
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1d' });
 
     res.json({
       message: 'Login successful',
