@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "axios": "^1.9.0"
+  }
 }
